@@ -1,0 +1,50 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-server"></i>Project Documents <br>
+        
+    </div>
+    <div class="card-body" *ngIf="projectDocumentList">
+        <div class="card-title">
+            Documents related to project: {{selectedProjectId}} - {{selectedProjectName}}
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <button type="button" class="btn btn-primary" [routerLink]="['/projectdocument',selectedProjectId,'add']" [queryParams]="{projectName:selectedProjectName}" >Add New</button>
+                <button type="button" class="btn btn-outline-primary ml-2" [routerLink]="['/projectlist']" >Projects</button>
+            </div>
+        </div>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Document Type</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let projectDocument of projectDocumentList; let i=index" (click)="setClickedRow(projectDocument,i)" [class.table-active]="i==selectedRow">
+                    <td scope="row">{{projectDocument.projectDocumentMappingId}}</td>
+                    <td>{{projectDocument.documentType}}</td>
+                    <td>{{projectDocument.notes}}</td>
+                    <td><input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectdocument',projectDocument.projectDocumentMappingId,'edit']" value="Edit"> </td>
+                    <td><input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(projectDocument.projectDocumentMappingId)" value="Delete"></td>
+                    <td><input type="button" name="downloadButton" class="btn btn-outline-secondary btn-sm" (click)="downloadButtonClick(projectDocument.projectDocumentMappingId)" value="Download"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)">
+
+            </ngb-pagination>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<!-- To display toast message when user delete particular record -->
+<ngb-toast class="bg-warning fixed-bottom" *ngIf="showToast" (hide)="closeToast()"   [autohide]="true" >
+  Record Deleted.
+</ngb-toast>

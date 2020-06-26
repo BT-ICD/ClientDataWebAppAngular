@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-header">
+      <i class="fa fa-server"> </i> Server Type
+  </div>
+  <div class="card-body" *ngIf="serverTypeList" >
+      <div class="row">
+          <div class="col-md-6">
+              <button type="button" class="btn btn-primary" [routerLink]="['/servertype/add']" >Add New</button>
+          </div>
+      </div>
+      <table class="table table-sm ">
+          <thead>
+          <tr>
+           
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let serverType of serverTypeList; let i=index" (click)="setClickedRow(serverType, i)" [class.table-active]="i == selectedRow">
+            <td scope="row"  >{{ serverType.serverTypeId}}</td>
+            <td>{{ serverType.name }}</td>
+            <td><input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/servertype',serverType.serverTypeId,'edit']" value="Edit"></td>
+            <td><input type="button" name="deleteButton"  class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(serverType.serverTypeId)" value="Delete"></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)" >
+          </ngb-pagination>
+         
+  </div>
+  
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

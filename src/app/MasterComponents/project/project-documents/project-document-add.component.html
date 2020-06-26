@@ -1,0 +1,93 @@
+<div class="card">
+    <div class="card-header">
+        Add New Document
+    </div>
+    <div class="card-title">
+        Documents related to project: {{selectedProjectName}}
+    </div>
+    <div class="card-body" *ngIf="projectDocumentAdd">
+        <form #projectDocumentForm="ngForm">
+            <fieldset>
+                <!-- Project ID -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="projectId" >Project Id</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="projectId"
+                            name="projectId"
+                            type="text"
+                            [(ngModel)]="projectDocumentAdd.projectId"
+                            readonly
+                        />
+                    </div>
+                </div>
+                <!-- Document Type ID -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="documentTypeId" >Document Id</label>
+                    <div class="col-md-8">
+                        <!-- <input class="form-control"
+                            id="documentTypeId"
+                            name="documentTypeId"
+                            type="text"
+                            [(ngModel)]="projectDocumentAdd.documentTypeId"
+                            required
+                        /> -->
+                        <select class="form-control"
+                            id="documentTypeId"
+                            name="documentTypeId"
+                            required
+                            [(ngModel)]="projectDocumentAdd.documentTypeId"
+                        >
+                         <option *ngFor="let documentType of documentTypeList" [ngValue]="documentType.documentTypeId"> 
+                            {{documentType.name}}
+                         </option>       
+                        </select>
+                    </div>
+                </div>
+                <!-- Notes -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes" >Notes</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="notes"
+                            name="notes"
+                            type="text"
+                            [(ngModel)]="projectDocumentAdd.notes"
+                            required
+                        />
+                    </div>
+                </div>
+                 <!-- File -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="filename" >File to upload</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="filename"
+                            name="filename"
+                            type="file"
+                            [(ngModel)]="projectDocumentAdd.file"
+                            required
+                            (change)="fileProgress($event)"
+                        />
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To add new record"
+                            name="saveButton" (click)="saveButtonClick(projectDocumentForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open project list"
+                        name="listButton" [routerLink]="['/projecdocumenttlist/4']">
+                        Cancel
+                    </button>
+                </div>                
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

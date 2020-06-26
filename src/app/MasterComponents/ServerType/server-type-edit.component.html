@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-header">
+        Server Type
+    </div>
+    <div class="card-body" *ngIf="serverType">
+        <form novalidate #serverTypeForm="ngForm">
+            <fieldset>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="serverTypeId">Id</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="serverTypeId"
+                            type="text"
+                            name="serverTypeId"
+                            [(ngModel)]="serverType.serverTypeId"
+                            #serverTypeIdvar="ngModel"
+                            readonly
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="name">Name</label>
+                    <div class="col-md-8">
+                        <input 
+                            class="form-control" 
+                            id="name" 
+                            type="text" 
+                            placeholder="Name (required)" required
+                            minlength="3" 
+                            [(ngModel)]=serverType.name 
+                            name="name" 
+                            #serverTypeNameVar="ngModel"
+                            [ngClass]="{'is-invalid': (serverTypeNameVar.touched || 
+                                                        serverTypeNameVar.dirty
+                                                        ) && 
+                                                  !serverTypeNameVar.valid }" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="serverTypeNameVar.errors?.required">
+                                Server type name is required.
+                            </span>
+                            <span *ngIf="serverTypeNameVar.errors?.minlength">
+                                Server type name must contains 3 or more characters.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To add new record" name="saveButton"
+                            (click)="saveButtonClick(serverTypeForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open server type list" name="listButton"
+                    [routerLink]="['/servertype']">
+                    Cancel
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

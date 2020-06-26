@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-list"></i>Project
+    </div>
+    <div class="card-body" *ngIf="projectList">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" [routerLink]="['/project/add']">Add New</button>
+            </div>
+        </div>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td scope="col">Id</td>
+                    <td scope="col">Name</td>
+                    <td scope="col">About</td>
+                    <td scope="col">Edit</td>
+                    <td scope="col">Delete</td>
+                    <td scope="col">Documents</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let project of projectList; let i=index" (click)="setClickedRow(project,i)" [class.table-active]="i==selectedRow">
+                    <td scope="row">{{project.projectId}}</td>
+                    <td scope="row">{{project.name}}</td>
+                    <td scope="row">{{project.about}}</td>
+                    <td> <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/project', project.projectId,'edit']" value="Edit" /> </td>
+                    <td> <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(project.projectId)" value="Delete" /> </td>
+                    <td><input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Documents"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)">
+            </ngb-pagination>
+        </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<!-- To display toast message when user delete particular record -->
+<ngb-toast class="bg-warning fixed-bottom" *ngIf="showToast" (hide)="closeToast()"   [autohide]="true" >
+  Record Deleted.
+</ngb-toast>

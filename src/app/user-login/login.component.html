@@ -1,0 +1,86 @@
+<div class="card">
+    <div class="card-header">
+        Log In
+    </div>
+    <div class="card-body">
+        <form autocomplete="off" #loginForm="ngForm">
+            <fieldset>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" 
+                            for="username"
+                            >User name
+                    </label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="User name (required)"
+                            required
+                            [(ngModel)]="userLogin.username"
+                            #usernameVar="ngModel"
+                            [ngClass]="{'is-invalid':(usernameVar.touched || usernameVar.dirty)
+                                            &&
+                                            !usernameVar.valid
+                                        }"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="usernameVar.errors?.required">
+                                User name is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- For Password Input -->
+                <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" for="password">
+                        Password
+                    </label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password (required)"
+                            required
+                            [(ngModel)]="userLogin.password"
+                            #passwordVar="ngModel"
+                            [ngClass]="{'is-invalid':(passwordVar.touched||passwordVar.dirty)
+                                                        && !passwordVar.valid
+                            }"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="passwordVar.errors?.required">
+                                Password is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- For Login and Cancel Buttons -->
+                <div class="row">
+                    <div class="col-md-4 offset-md-2">
+                        <button  class="btn btn-primary mr-3"
+                            type="button"
+                            name="loginButton"
+                            id="loginButton"
+                            (click)="loginButtonClick(loginForm)"
+                        >
+                        Log In
+                        </button>
+                        <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="cancelButton"
+                            name="cancelButton"
+                            [routerLink]="['/home']"
+                        >
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="alert alert-danger"
+    *ngIf="errorMessage">{{errorMessage}}
+</div>
+</div>

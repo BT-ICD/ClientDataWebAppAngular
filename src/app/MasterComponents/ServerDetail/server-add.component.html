@@ -1,0 +1,140 @@
+<div class="card">
+    <div class="card-header">
+        Add New Server
+    </div>
+    <div class="card-body" *ngIf="server"> 
+        <form #serverForm="ngForm">
+            <fieldset>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="name">Name</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Name (required)" required
+                            minlength="3"
+                            [(ngModel)]=server.name
+                            #serverNameVar="ngModel"
+                            [ngClass]="{'is-invalid': (serverNameVar.touched ||
+                                                            serverNameVar.dirty) &&
+                                                            !serverNameVar.valid}"
+                        />
+                        <span class="invalid-feedback">
+                           <span *ngIf="serverNameVar.errors?.required">
+                                Server name required
+                           </span>
+                           <span *ngIf="serverNameVar.errors?.minlength">
+                                Server name must contains 3 or more characters.
+                           </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="serverTypeName">Server type</label>
+                    <div class="col-md-8">
+                        <!-- <input
+                            class="form-control"
+                            id="serverTypeName"
+                            name="serverTypeName"
+                            placeholder="Server Type (required)" required
+                            [(ngModel)]=server.serverTypeName
+                            #serverTypeNameVar="ngModel"
+                            [ngClass]="{'is-invalid':(serverTypeNameVar.touched||
+                                                        serverTypeNameVar.dirty
+                                                        )&&
+                                                        !serverTypeNameVar.valid
+                                        }"
+                        /> -->
+                        <select 
+                            class="form-control"
+                            id="serverTypeId"
+                            name="serverTypeId"
+                            required
+                            [(ngModel)]=server.serverTypeId
+                            #serverTypeIdVar="ngModel"
+                            
+                            >
+                             
+                            <option *ngFor="let serverType of serverTypeList" [ngValue]="serverType.serverTypeId">
+                                   {{serverType.name}} 
+                            </option>
+                           
+                        </select>
+                        <!-- Need to learn about validation of Select Tag -->
+                        <!-- <span class="invalid-feedback">
+                            <span *ngIf="serverTypeIdVar.errors?.required">
+                                    Server type is required
+                            </span>
+                        </span> -->
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="internalIP">Internal IP</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="internalIP"
+                            name="internalIP"
+                            placeholder="Internal IP Address"
+                            [(ngModel)]=server.internalIP
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="externalIP">External IP</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="externalIP"
+                            name="externalIP"
+                            placeholder="External IP Address"
+                            [(ngModel)]=server.externalIP
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="urlToAccess">Url to access (domain)</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="urlToAccess"
+                            name="urlToAccess"
+                            placeholder="Url to access"
+                            [(ngModel)]=server.urlToAccess
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="notes"
+                            name="notes"
+                            placeholder="About Server"
+                            [(ngModel)]=server.notes
+                        />
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To add new record" name="saveButton"
+                            (click)="saveButtonClick(serverForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open server list" name="listButton"
+                    [routerLink]="['/serverlist']">
+                    Cancel
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

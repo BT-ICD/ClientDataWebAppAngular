@@ -1,0 +1,97 @@
+<div class="card">
+    <div class="card-header">
+        Edit Project
+    </div>
+    <div class="card-body" *ngIf="project">
+        <form #projectForm="ngForm">
+            <fieldset>
+                    <!-- For project Id -->
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="projectId">Id</label>
+                        <div class="col-md-8">
+                            <input class="form-control" 
+                                    id="projectId" 
+                                    name="projectId" 
+                                    type="text" 
+                                    [(ngModel)]="project.projectId"
+                                    readonly 
+                            />
+                        </div>
+                    </div>
+                <!-- For project Name -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="name">Name</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="name" name="name" type="text" placeholder="Name (required)"
+                            required [(ngModel)]="project.name" #nameVar="ngModel" [ngClass]="{'is-invalid':(nameVar.touched ||nameVar.dirty) 
+                                                        && !nameVar.valid}" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="nameVar.errors?.required">
+                                Project name required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- about     -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="about">About</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="about" name="about" type="text" placeholder="About (required)"
+                            required [(ngModel)]="project.about" #aboutVar="ngModel" [ngClass]="{'is-invalid':(aboutVar.touched ||aboutVar.dirty) 
+                                                        && !aboutVar.valid}" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="aboutVar.errors?.required">
+                                About project required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- notes     -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="notes" name="notes" type="text" placeholder="Notes (required)"
+                            required [(ngModel)]="project.notes" #notesVar="ngModel" [ngClass]="{'is-invalid':(notesVar.touched ||notesVar.dirty) 
+                                                        && !notesVar.valid}" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="notesVar.errors?.required">
+                                Notes required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- sourceCodeLocation     -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="sourceCodeLocation">Source Code Location (SVN)</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="sourceCodeLocation" name="sourceCodeLocation" type="text"
+                            placeholder="Notes (required)" required [(ngModel)]="project.sourceCodeLocation"
+                            #sourceCodeLocationVar="ngModel" [ngClass]="{'is-invalid':(sourceCodeLocationVar.touched ||sourceCodeLocationVar.dirty) 
+                                                        && !sourceCodeLocationVar.valid}" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="sourceCodeLocationVar.errors?.required">
+                                Source Code Location (SVN/TFS/GIT Path) required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To edit record"
+                            name="saveButton" (click)="saveButtonClick(projectForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open project list"
+                        name="listButton" [routerLink]="['/projectlist']">
+                        Cancel
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-server"></i>Server
+    </div>
+    <div class="card-body" *ngIf="serverList">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" [routerLink]="['/server/add']">Add New</button>
+            </div>
+        </div>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Url</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let server of serverList; let i=index" (click)="setClickedRow(server,i)" [class.table-active]="i==selectedRow">
+                    <td scope="row">{{server.serverId}}</td>
+                    <td>{{server.name}}</td>
+                    <td>{{server.serverTypeName}}</td>
+                    <td>{{server.urlToAccess}}</td>
+                    <td>{{server.notes}}</td>
+                    <td><input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/server',server.serverId,'edit']" value="Edit"> </td>
+                    <td><input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(server.serverId)" value="Delete"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)">
+
+            </ngb-pagination>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<!-- To display toast message when user delete particular record -->
+<ngb-toast class="bg-warning fixed-bottom" *ngIf="showToast" (hide)="closeToast()"   [autohide]="true" >
+  Record Deleted.
+</ngb-toast>
