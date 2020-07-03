@@ -7,6 +7,7 @@ import { ProjectDocumentListResolvedService } from './project-document-list-reso
 import { ProjectDocumentAddComponent } from './project-document-add.component';
 import { ProjectDocumentEditComponent } from './project-document-edit.component';
 import { DocumentTypeListResolvedService } from '../../document-type/document-type-list-resolved.service';
+import { ProjectDocumentResolvedService } from './project-document-resolved.service';
 
 
 
@@ -29,7 +30,7 @@ import { DocumentTypeListResolvedService } from '../../document-type/document-ty
       {
         path:'projectdocument/:id/edit',
         component:ProjectDocumentEditComponent,
-        resolve:{resolvedData:DocumentTypeListResolvedService}
+        resolve:{resolvedData:ProjectDocumentResolvedService, resolvedDocumentTypeList:DocumentTypeListResolvedService}
 
       }
     ])

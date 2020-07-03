@@ -5,6 +5,7 @@ export interface IProjectDetail {
     notes:string,
     sourceCodeLocation:string
 }
+
 export interface IProjectListResolved{
     projectList:IProjectDetail[];
     error?:any

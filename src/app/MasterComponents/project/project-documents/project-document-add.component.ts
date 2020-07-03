@@ -47,19 +47,33 @@ onDocumentTypeListRetrieved(data:IDocumentTypeDTODetail[]){
     this.fileData = <File>fileInput.target.files[0];
 }
 saveButtonClick(f:NgForm){
-      //if(f.valid)
-      {
-          const formData = new FormData();
-          formData.append('projectId', this.projectDocumentAdd.projectId+'');
-          console.log('documentTypeId' + this.projectDocumentAdd.documentTypeId);
-          formData.append('documentTypeId',this.projectDocumentAdd.documentTypeId+'');
-          formData.append('notes', this.projectDocumentAdd.notes);
-          formData.append('file', this.fileData);
-          this.projectDocumentDataService.add(formData).subscribe(data=>{
-            this.router.navigate(['projectdocumentlist',this.projectDocumentAdd.projectId],{
-              queryParams:{projectName:this.selectedProjectName}
-            });
+    //validations - need to update with formatted content next to input control
+    let errMessage:string='';
+    if(this.projectDocumentAdd.documentTypeId===0){
+      errMessage='Document type is required';
+    }
+    if(this.projectDocumentAdd.notes.trim()===''){
+      errMessage+= '\nNotes is required' 
+    }
+    if(this.fileData==null){
+      errMessage+= '\nFile is required';
+    }
+    if(errMessage!=''){
+      alert(errMessage);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('projectId', this.projectDocumentAdd.projectId+'');
+    console.log('documentTypeId' + this.projectDocumentAdd.documentTypeId);
+    formData.append('documentTypeId',this.projectDocumentAdd.documentTypeId+'');
+    formData.append('notes', this.projectDocumentAdd.notes);
+    formData.append('file', this.fileData);
+    this.projectDocumentDataService.add(formData).subscribe(data=>{
+        this.router.navigate(['projectdocumentlist',this.projectDocumentAdd.projectId],{
+          queryParams:{projectName:this.selectedProjectName}
         });
-      }
+    });
+      
 }
 }

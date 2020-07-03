@@ -20,8 +20,8 @@ projectDocumentList:IProjectDocumentDetail[];
     const url:string = this.dataConstantsService.BASEAPIURL + 'ProjectDocumentMapping/getById/' + id;
     if(id===0){
       return of(this.initializeProjectDocumentDetail());
-    return this.http.get<IProjectDocumentDetail>(url);
     }
+    return this.http.get<IProjectDocumentDetail>(url);
   }
   initializeProjectDocumentDetail():IProjectDocumentDetail{
     return {
@@ -40,9 +40,10 @@ projectDocumentList:IProjectDocumentDetail[];
     const url:string = this.dataConstantsService.BASEAPIURL +'ProjectDocumentMapping/add';
     return this.http.post<IProjectDocumentDetail>(url,formData);
   }
-  edit(iProjectDocumentDetail:IProjectDocumentDetail){
+  //edit(iProjectDocumentDetail:IProjectDocumentDetail)
+  edit(formData:FormData){
     const url:string = this.dataConstantsService.BASEAPIURL +'ProjectDocumentMapping/edit';
-    return this.http.post<IProjectDocumentDetail>(url,iProjectDocumentDetail);
+    return this.http.post<IProjectDocumentDetail>(url,formData);
   }
   delete (id:number){
     const url:string =this.dataConstantsService.BASEAPIURL + 'ProjectDocumentMapping/delete/' + id;

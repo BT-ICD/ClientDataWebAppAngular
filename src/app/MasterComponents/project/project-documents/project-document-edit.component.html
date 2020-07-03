@@ -1,1 +1,115 @@
-<p>project-document-edit works!</p>
+<div class="card">
+    <div class="card-header">
+        Edit Document
+    </div>
+    <div class="card-title">
+        Document related to project: {{selectedProjectName}}
+    </div>
+    <div class="card-body" *ngIf="projectDocument">
+        <form #projectDocumentForm="ngForm">
+            <fieldset>
+                <!-- Project Document  Id -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="projectDocumentMappingId">Document Id</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="projectDocumentMappingId"
+                            name="projectDocumentMappingId"
+                            type="text"
+                            [(ngModel)]="projectDocument.projectDocumentMappingId"
+                            readonly
+                        />
+                    </div>
+                </div>
+                <!-- Project Id -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="projectId">Project Id</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="projectId"
+                            name="projectId"
+                            type="text"
+                            [(ngModel)]="projectDocument.projectId"
+                            readonly
+                        />
+                    </div>
+                </div>
+                <!-- Document Type -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="documentTypeId">Document Type</label>
+                    <div class="col-md-8">
+                        <select class="form-control"
+                            id="documentTypeId"
+                            name="documentTypeId"
+                            [(ngModel)]="projectDocument.documentTypeId"
+                            required
+                        >
+                         <option *ngFor="let documentType of documentTypeList" [ngValue]="documentType.documentTypeId">
+                             {{documentType.name}}
+                         </option>   
+                        </select>
+                    </div>
+                </div>
+                <!-- Notes -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="notes"
+                            name="notes"
+                            type="text"
+                            [(ngModel)]="projectDocument.notes"
+                            required
+                        />
+                    </div>
+                </div>
+                <!-- To display existing file name and link to download -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="actualFileName">Current File</label>
+                    <div class="col-md-3">
+                        <input class="form-control" 
+                            id="actualFileName"
+                            name="actualFileName"
+                            type="text"
+                            [(ngModel)]="projectDocument.actualFileName"
+                            readonly
+                        />
+                    </div>
+                    <div class="col-md-2">
+                        <a [href]="downloadUrl">{{projectDocument.actualFileName}}</a>
+                    </div>
+                </div>
+                <!-- To upload new file /overwrite existing file -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="filename">File to upload</label>
+                    <div class="col-md-6">
+                        <input class="form-control"
+                            id="filename"
+                            name="filename"
+                            type="file"
+                         
+                            (change)="fileProgress($event)"
+                        />
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To add new record"
+                            name="saveButton" (click)="saveButtonClick(projectDocumentForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open project list"
+                        name="listButton" [routerLink]="['/projectdocumentlist',projectDocument.projectId]"
+                                [queryParams]={projectName:selectedProjectName}>
+                        Cancel
+                    </button>
+                </div>                 
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

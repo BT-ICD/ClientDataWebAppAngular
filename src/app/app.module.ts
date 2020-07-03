@@ -36,9 +36,8 @@ import { DocumentTypeModule } from './MasterComponents/document-type/document-ty
     UserLoginModule,
     ProjectModule,
     ProjectDocumentsModule,
-    AppRoutingModule,
-    DocumentTypeModule
-    
+    DocumentTypeModule,
+    AppRoutingModule
 
   ],
   providers: [],
