@@ -18,6 +18,7 @@ import { UserLoginModule } from './user-login/user-login.module';
 import { ProjectModule } from './MasterComponents/project/project.module';
 import { ProjectDocumentsModule } from './MasterComponents/Project/project-documents/project-documents.module';
 import { DocumentTypeModule } from './MasterComponents/document-type/document-type.module';
+import { ProjectServerModule } from './MasterComponents/Project/project-server/project-server.module';
 
 @NgModule({
   declarations: [
@@ -37,8 +38,8 @@ import { DocumentTypeModule } from './MasterComponents/document-type/document-ty
     ProjectModule,
     ProjectDocumentsModule,
     DocumentTypeModule,
+    ProjectServerModule,
     AppRoutingModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

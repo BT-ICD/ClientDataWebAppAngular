@@ -17,6 +17,7 @@
                     <td scope="col">Edit</td>
                     <td scope="col">Delete</td>
                     <td scope="col">Documents</td>
+                    <td scope="col">Servers</td>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                     <td> <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/project', project.projectId,'edit']" value="Edit" /> </td>
                     <td> <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(project.projectId)" value="Delete" /> </td>
                     <td><input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Documents"/></td>
+                    <td><input type="button" name="serverButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectserverlist',project.projectId]"  [queryParams]="{projectName:project.name}" value="Servers"/></td>
                 </tr>
             </tbody>
         </table>
