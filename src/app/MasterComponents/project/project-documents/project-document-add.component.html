@@ -80,7 +80,9 @@
                         </button>
                     </div>
                     <button class="btn btn-outline-primary " type="button" title="Cancel and open project list"
-                        name="listButton" [routerLink]="['/projecdocumenttlist/4']">
+                        name="listButton" [routerLink]="['/projectdocumentlist',projectDocumentAdd.projectId]"
+                            [queryParams]="{projectName:selectedProjectName}"
+                        >
                         Cancel
                     </button>
                 </div>                

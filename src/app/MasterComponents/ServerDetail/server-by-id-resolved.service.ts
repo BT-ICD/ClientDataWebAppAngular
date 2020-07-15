@@ -23,7 +23,7 @@ export class ServerByIdResolvedService implements Resolve<IServerDetailResolved>
     .pipe(
       map(data=>({serverDetail:data, error:null})),
       catchError(error=>{
-        const message=`Retrieval error: ${error.statusTest}`;
+        const message=`Retrieval error: ${error.statusText}`;
         return of({serverDetail:null, error:message});
         })
     );

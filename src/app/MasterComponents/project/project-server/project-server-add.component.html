@@ -1,1 +1,165 @@
-<p>project-server-add works!</p>
+<div class="card">
+    <div class="card-header">
+        Add Project Server Details
+    </div>
+    <div class="card-title">
+        Server related to project: {{selectedProjectName}}
+    </div>
+    <div class="card-body" *ngIf="projectServerType">
+        <form #projectserverForm="ngForm">
+            <fieldset>
+                <!-- Server Selection LOV -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="serverId">Deployed on server</label>
+                    <div class="col-md-8">
+                        <select 
+                            class="form-control"
+                            id="serverId"
+                            name="serverId"
+                            required
+                            [(ngModel)]=projectServerType.serverId
+                            #serverIdVar="ngModel"
+                        >
+                        <option *ngFor="let serverobj of serverList" [ngValue]="serverobj.serverId">
+                          {{serverobj.name}} 
+                        </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Server Type Selection LOV -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="deployedServerTypeId">Server type</label>
+                    <div class="col-md-8">
+                        <select 
+                            class="form-control"
+                            id="deployedServerTypeId"
+                            name="deployedServerTypeId"
+                            required
+                            [(ngModel)]=projectServerType.deployedServerTypeId
+                            #deployedServerTypeIdVar="ngModel"
+                        >
+                        <option *ngFor="let serverType of serverTypeList" [ngValue]="serverType.serverTypeId">
+                          {{serverType.name}} 
+                        </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Url To Access -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="urlToAccess">URL</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="urlToAccess"
+                            name="urlToAccess"
+                            placeholder="URL to access (required)" 
+                            type="text"
+                            [(ngModel)]=projectServerType.urlToAccess
+                        />
+                        
+                    </div>
+                </div>
+                <!-- Deployed Location -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="deployedLocation">Deployed location</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="deployedLocation"
+                            name="deployedLocation"
+                            placeholder="Deployed at location (required)" 
+                            required
+                            type="text"
+                            [(ngModel)]=projectServerType.deployedLocation
+                            #deployedLocationVar="ngModel"
+                            [ngClass]="{'is-invalid': (deployedLocationVar.touched ||
+                                                            deployedLocationVar.dirty) &&
+                                                            !deployedLocationVar.valid}"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="deployedLocationVar.errors?.required">
+                                 Deployed location required
+                            </span>
+                         </span>
+                    </div>
+                </div>
+                <!-- App Log Location -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="appLogLocation">Applicaiton log</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="appLogLocation"
+                            name="appLogLocation"
+                            placeholder="Applicaiton Log Locaiton " 
+                            type="text"
+                            [(ngModel)]=projectServerType.appLogLocation
+                        />
+                        
+                    </div>
+                </div>
+                <!-- Database Server LOV -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="deployedServerTypeId">Database server</label>
+                    <div class="col-md-8">
+                          <select 
+                                class="form-control"
+                                id="dbServerID"
+                                name="dbServerID"
+                                [(ngModel)]=projectServerType.dbServerID
+                                #dbServerIDVar="ngModel"
+                            >
+                            <option *ngFor="let serverobj of serverList" [ngValue]="serverobj.serverId">
+                                {{serverobj.name}} 
+                              </option>
+                            </select>
+                    </div>
+                </div>
+                <!-- Database Name -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="dbName">Database name</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="dbName"
+                            name="dbName"
+                            placeholder="Database Name " 
+                            type="text"
+                            [(ngModel)]=projectServerType.dbName
+                        />
+                    </div>
+                </div>
+                <!-- Notes -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="notes"
+                            name="notes"
+                            placeholder="Project related notes" 
+                            type="text"
+                            [(ngModel)]=projectServerType.notes
+                        />
+                    </div>
+                </div>
+                <!-- Action Button Row -->
+                <div class="form-group row">
+                    <div class="col-md-1 offset-md-2">
+                        <button class="btn btn-outline-primary" type="button" title="To add new record"
+                            name="saveButton" (click)="saveButtonClick(projectserverForm)">
+                            Save
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-primary " type="button" title="Cancel and open project list"
+                        name="listButton" [routerLink]="['/projectserverlist',selectedProjectId]" [queryParams]="{projectName:selectedProjectName}">
+                        Cancel
+                    </button>
+                </div>                  
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

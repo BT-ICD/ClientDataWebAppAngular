@@ -25,3 +25,27 @@ export interface IProjectServerDetailResolved{
     projectServerDetail:IProjectServerType,
     error?:any
 }
+export interface IProjectServerMappingDTOEdit{
+    projectServerMappingId:number,
+    projectId:number,
+    projectName:string,
+    serverId:number,
+    deployedServerTypeId:number,
+    urlToAccess:string,
+    deployedLocation:string,
+    appLogLocation:string,
+    dbServerID:number,
+    dbName:string,
+    notes:string
+}
+export interface IProjectServerMappingDTOAdd{
+    projectId:number,
+    serverId:number,
+    deployedServerTypeId:number,
+    urlToAccess:string,
+    deployedLocation:string,
+    appLogLocation:string,
+    dbServerID:number,
+    dbName:string,
+    notes:string
+}

@@ -16,3 +16,11 @@ export interface IServerDetailResolved{
     serverDetail:IServerDetail,
     error?:any
 }
+export interface IServerDTOFORLOV{
+    serverId:number,
+    name:string
+}
+export interface IServerDTOForLOVListResolved{
+    serverListForLOV:IServerDTOFORLOV[],
+    error?:any
+}

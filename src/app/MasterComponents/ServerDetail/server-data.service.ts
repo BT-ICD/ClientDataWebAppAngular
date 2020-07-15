@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataConstantsService } from 'src/app/CommonServices/data-constants.service';
-import { IServerDetail } from './iserver-details';
+import { IServerDetail, IServerDTOFORLOV } from './iserver-details';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -20,6 +20,10 @@ serverList:IServerDetail[]
     }
     const url:string = this.dataConstantsService.BASEAPIURL + 'Server/getById/' + id;
     return this.http.get<IServerDetail>(url);
+  }
+  getServerListForLOV():Observable<IServerDTOFORLOV[]>{
+    const url:string = this.dataConstantsService.BASEAPIURL + 'Server/ListForLov';
+    return this.http.get<IServerDTOFORLOV[]>(url);
   }
   add(iServerDetail:IServerDetail){
     const url:string = this.dataConstantsService.BASEAPIURL + 'Server/add';

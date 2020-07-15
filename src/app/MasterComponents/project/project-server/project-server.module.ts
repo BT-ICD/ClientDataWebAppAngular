@@ -5,6 +5,9 @@ import { ProjectServerListComponent } from './project-server-list.component';
 import { ProjectServerAddComponent } from './project-server-add.component';
 import { ProjectServerEditComponent } from './project-server-edit.component';
 import { ProjectServerListResolvedService } from './project-server-list-resolved.service';
+import { ServerTypeResolverService } from '../../ServerType/server-type-resolver.service';
+import { ServerListForLOVResolvedService } from '../../ServerDetail/server-list-for-lovresolved.service';
+import { ProjectServerResolvedService } from './project-server-resolved.service';
 
 
 
@@ -21,11 +24,13 @@ import { ProjectServerListResolvedService } from './project-server-list-resolved
       },
       {
         path:'projectserver/:id/add',
-        component:ProjectServerAddComponent
+        component:ProjectServerAddComponent,
+        resolve:{resolveDataServerTypeList:ServerTypeResolverService, resolveDataServerList:ServerListForLOVResolvedService}
       },
       {
         path:'projectserver/:id/edit',
-        component:ProjectServerEditComponent
+        component:ProjectServerEditComponent,
+        resolve:{resolvedData: ProjectServerResolvedService, resolveDataServerTypeList:ServerTypeResolverService, resolveDataServerList:ServerListForLOVResolvedService}
       }
   ])
   ]

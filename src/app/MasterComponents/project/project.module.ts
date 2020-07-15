@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ProjectListResolvedService } from './project-list-resolved.service';
 import { AuthGuard } from 'src/app/user-login/auth-guard.guard';
 import { ProjectResolvedService } from './project-resolved.service';
+import { ServerListForLOVResolvedService } from '../ServerDetail/server-list-for-lovresolved.service';
 
 
 
@@ -19,7 +20,7 @@ import { ProjectResolvedService } from './project-resolved.service';
         path:'projectlist', 
         component:ProjectListComponent,
         runGuardsAndResolvers:'always',
-        resolve:{resolvedData:ProjectListResolvedService}
+        resolve:{resolvedData:ProjectListResolvedService, resolvedServerList:ServerListForLOVResolvedService}
         //canActivate:[AuthGuard]
       },
       {
@@ -29,7 +30,7 @@ import { ProjectResolvedService } from './project-resolved.service';
       {
         path:'project/:id/edit',
         component:ProjectEditComponent,
-        resolve:{resolvedData:ProjectResolvedService}
+        resolve:{resolvedData:ProjectResolvedService, resolvedServerList:ServerListForLOVResolvedService}
       }
 
     ])
