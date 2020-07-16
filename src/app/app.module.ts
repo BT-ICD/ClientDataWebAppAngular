@@ -19,11 +19,15 @@ import { ProjectModule } from './MasterComponents/project/project.module';
 import { ProjectDocumentsModule } from './MasterComponents/Project/project-documents/project-documents.module';
 import { DocumentTypeModule } from './MasterComponents/document-type/document-type.module';
 import { ProjectServerModule } from './MasterComponents/Project/project-server/project-server.module';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { AboutComponent } from './about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ApplicaitonNavigationBarComponent,
+    PageNotFoundComponent,
+    AboutComponent
     
   ],
   imports: [
