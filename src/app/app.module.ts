@@ -1,7 +1,7 @@
 // Angular Library Modules 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 // Third Party Modules
@@ -21,6 +21,7 @@ import { DocumentTypeModule } from './MasterComponents/document-type/document-ty
 import { ProjectServerModule } from './MasterComponents/Project/project-server/project-server.module';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AboutComponent } from './about.component';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { AboutComponent } from './about.component';
     ProjectServerModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
