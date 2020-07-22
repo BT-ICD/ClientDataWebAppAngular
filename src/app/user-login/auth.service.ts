@@ -12,7 +12,7 @@ export class AuthService {
     
     //return this._isLoggedIn;
     let tokenObj = sessionStorage.getItem('tokenobj');
-    console.log('token obj' +tokenObj  );
+   // console.log('token obj' +tokenObj  );
 
     if(tokenObj==null)
     {
@@ -32,7 +32,7 @@ export class AuthService {
  
   public get userToken(): IUserToken {
     let tokenObj = sessionStorage.getItem('tokenobj');
-    console.log(tokenObj);
+   // console.log(tokenObj);
     this.userToken=JSON.parse(tokenObj);
     return this._userToken;
 

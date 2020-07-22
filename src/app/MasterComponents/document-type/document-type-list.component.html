@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-file"> Document types</i>
+    </div>
+    <div class="card-body" *ngIf="documentTypeList">
+        <div class="row">
+            <div class="col-md-12 mb-2 d-flex justify-content-end">
+                <button type="button" class="btn btn-primary" [routerLink]="['/documenttype','add']">Add New</button>
+            </div>
+        </div>
+    <p-table #dt [columns]="cols"   [value]="documentTypeList" selectionMode="single" [(selection)]="selectedDocumentType" dataKey="documentTypeId" 
+            (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <ng-template pTemplate="caption"> 
+            <div class="form-group row">
+                <div class="col-md-1">
+                    <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" >
+                    </button>
+                </div>
+                <div class="col-md-11 d-flex justify-content-end">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th>
+                    Action
+                </th>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-documentType let-columns="columns">
+            <tr [pSelectableRow]="documentType">
+                <td *ngFor="let col of columns">
+                        {{documentType[col.field]}}
+                </td>
+                <td>
+                    <button class="btn btn-outline-secondary btn-sm" name="editButton" type="button" [routerLink]="['/documenttype',documentType.documentTypeId,'edit']" value="Edit" >Edit</button>
+                    <button class="btn btn-outline-secondary btn-sm ml-2" name="deleteButton" type="button" (click)='deleteButtonClick(documentType.documentTypeId)' value="Delete">Delete</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<ngb-toast class="bg-warning fixed-bottom" *ngIf="showToast" (hide)="closeToast()"   [autohide]="true" >
+  Record Deleted.
+</ngb-toast>

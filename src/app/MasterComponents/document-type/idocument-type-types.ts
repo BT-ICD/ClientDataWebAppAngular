@@ -10,3 +10,6 @@ export interface IDocumentTypeResolved{
     documentType:IDocumentTypeDTODetail,
     error?:any
 }
+export interface IDocumentTypeDTOAdd {
+    name:string
+}
