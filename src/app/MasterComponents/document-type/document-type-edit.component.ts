@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { IDocumentTypeDTODetail } from './idocument-type-types';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentTypeDataService } from './document-type-data.service';
-import { resolve } from 'dns';
 import { NgForm } from '@angular/forms';
 
 @Component({
