@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class DocumentTypeAddComponent implements OnInit {
 documentType:IDocumentTypeDTODetail;
-
+errorMessage:string;
   constructor( private router:Router, private documentTypeDataService:DocumentTypeDataService) { }
 
   ngOnInit(): void {
