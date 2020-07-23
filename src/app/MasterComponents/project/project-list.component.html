@@ -7,37 +7,50 @@
             <div class="col-md-6">
                 <button type="button" class="btn btn-primary" [routerLink]="['/project/add']">Add New</button>
             </div>
-        </div>
-        <table class="table table-sm">
-            <thead>
-                <tr>
-                    <td scope="col">Id</td>
-                    <td scope="col">Name</td>
-                    <td scope="col">About</td>
-                    <td scope="col">Edit</td>
-                    <td scope="col">Delete</td>
-                    <td scope="col">Documents</td>
-                    <td scope="col">Servers</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let project of projectList; let i=index" (click)="setClickedRow(project,i)" [class.table-active]="i==selectedRow">
-                    <td scope="row">{{project.projectId}}</td>
-                    <td scope="row">{{project.name}}</td>
-                    <td scope="row">{{project.about}}</td>
-                    <td> <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/project', project.projectId,'edit']" value="Edit" /> </td>
-                    <td> <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(project.projectId)" value="Delete" /> </td>
-                    <td><input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Documents"/></td>
-                    <td><input type="button" name="serverButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/projectserverlist',project.projectId]"  [queryParams]="{projectName:project.name}" value="Servers"/></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)">
-            </ngb-pagination>
-        </div>
+     </div>
+        <p-table #dt [columns]="cols" [value]="projectList" selectionMode="single" 
+                [(selection)]="selectedProject" dataKey="projectId" 
+                (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)">
+                <ng-template pTemplate="caption">
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" >
+                            </button>
+                        </div>
+                        <div class="col-md-11 d-flex justify-content-end">
+                            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-project let-columns="columns">
+                    <tr [pSelectableRow]="project">
+                        <td *ngFor="let col of columns">
+                                {{project[col.field]}}
+                        </td>
+                        <td>
+                            <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/project', project.projectId,'edit']" value="Edit" />
+                            <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/project', project.projectId,'edit']" value="Edit" />
+                            <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm ml-1" (click)="deleteButtonClick(project.projectId)" value="Delete" /> 
+                            <input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Documents"/>
+                            <input type="button" name="serverButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectserverlist',project.projectId]"  [queryParams]="{projectName:project.name}" value="Servers"/>
+                        </td>
+                    </tr>
+                </ng-template>
+        </p-table>
+    </div>
 </div>
-
 <div class="alert alert-danger" *ngIf="errorMessage">
     {{errorMessage}}
 </div>

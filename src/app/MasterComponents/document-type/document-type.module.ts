@@ -4,7 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { DocumentTypeListComponent } from './document-type-list.component';
 import { DocumentTypeListResolvedService } from './document-type-list-resolved.service';
-import {TableModule} from 'primeng/table';
+
 import { DocumentTypeEditComponent } from './document-type-edit.component';
 import { DocumentTypeAddComponent } from './document-type-add.component';
 import { DocumentTypeResolvedService } from './document-type-resolved.service';
@@ -14,7 +14,6 @@ import { DocumentTypeResolvedService } from './document-type-resolved.service';
   declarations: [ DocumentTypeListComponent, DocumentTypeEditComponent, DocumentTypeAddComponent],
   imports: [
     SharedModule,
-    TableModule,
     RouterModule.forChild([
       {
         path:'documenttypelist',

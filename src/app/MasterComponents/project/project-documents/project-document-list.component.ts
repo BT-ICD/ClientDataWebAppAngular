@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IProjectDocumentDetail } from './iproject-document-types';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectDocumentDataService } from './project-document-data.service';
-import { resolve } from 'url';
+
 import { DataConstantsService } from 'src/app/CommonServices/data-constants.service';
 ///Learning Reference - To download file https://stackoverflow.com/questions/50907542/download-a-file-from-asset-folder-when-clicking-on-a-button
 @Component({
@@ -19,18 +19,12 @@ collectionSize=0;
 showToast:boolean=false;
 selectedProjectName:string='';
 selectedProjectId:number;
+selectedProjectDocument:IProjectDocumentDetail;
+cols:any[];
   private _projectDocumentList: IProjectDocumentDetail[];
   public get projectDocumentList(): IProjectDocumentDetail[] {
-    //return this._projectDocumentList;
-    if(this._projectDocumentList){
-      return this._projectDocumentList
-        .map((projectDocument,i)=>({id:i+1, ...projectDocument}))
-        .slice((this.page-1)*this.pageSize, (this.page-1)*this.pageSize+this.pageSize);
-    }
-    else
-    {
-      return this._projectDocumentList;
-    }
+    return this._projectDocumentList;
+    
   }
   public set projectDocumentList(value: IProjectDocumentDetail[]) {
     this._projectDocumentList = value;
@@ -39,6 +33,11 @@ selectedProjectId:number;
   constructor(private route:ActivatedRoute, private router:Router, private projectDocumentDataService:ProjectDocumentDataService, private dataConstantsService:DataConstantsService) { }
 
   ngOnInit(): void {
+    this.cols=[
+      {field:'projectDocumentMappingId',header:'Id'},
+      {field:'documentType',header:'Document'},
+      {field:'notes',header:'Notes'}
+    ];
     this.loadData();
     //console.log(this.route.snapshot.queryParamMap.get('projectName'))
   }
@@ -55,17 +54,17 @@ selectedProjectId:number;
     this.projectDocumentList=data;
     this.collectionSize=data?.length;
   }  
-  pageChanged(event){
-    this.page=+event;
-    this.selectedRow=-1;
-  }  
-  setClickedRow(data,index){
-    this.selectedRow=index;
-  }
+  
   deleteButtonClick(id:number){
     if(confirm('You are about to delete a record. Are you sure?')){
       this.projectDocumentDataService.delete(id).subscribe(data=>this.onRecordDeleted(data));
     }
+  }
+  onRowSelect(event){
+
+  }
+  onRowUnSelect(event){
+
   }
   onRecordDeleted(data){
     if(data.rowsAffected==1){
@@ -80,12 +79,13 @@ selectedProjectId:number;
   }
   downloadButtonClick(id:number){
     const url:string = this.dataConstantsService.BASEAPIURL + 'ProjectDocumentMapping/download/' + id;
+    console.log(url);
     const link = document.createElement('a');
     link.setAttribute('type','hidden');
     link.setAttribute('href',url);
     document.body.append(link);
     link.click();
-    link.remove();
+    link.remove(); 
 
   }
 

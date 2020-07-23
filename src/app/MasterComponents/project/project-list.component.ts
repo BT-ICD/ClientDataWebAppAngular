@@ -15,6 +15,8 @@ page=0;
 pageSize=10;
 collectionSize=0;
 showToast:boolean=false;
+selectedProject:IProjectDetail;
+cols:any[];
   private _projectList: IProjectDetail[];
   public get projectList(): IProjectDetail[] {
     //return this._projectList;
@@ -33,6 +35,11 @@ showToast:boolean=false;
   constructor(private route:ActivatedRoute, private router:Router, private projectDataService:ProjectDataService) { }
 
   ngOnInit(): void {
+    this.cols=[
+      {field:'projectId',header:'Id'},
+      {field:'name',header:'Name'},
+      {field:'about',header:'About'}
+    ];
     this.loadData();
   }
   loadData(){
@@ -67,6 +74,12 @@ showToast:boolean=false;
       this.showToast=true;
       this.router.navigate(['/projectlist']);
     }
+  }
+  onRowSelect(event){
+
+  }
+  onRowUnSelect(event){
+
   }
   closeToast(){
     this.showToast=false;
