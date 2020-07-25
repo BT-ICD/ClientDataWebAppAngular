@@ -15,7 +15,8 @@
         </div>
         <p-table #dt [columns]="cols" [value]="projectDocumentList" selectionMode="single" 
              [(selection)]="selectedProjectDocument" dataKey="projectDocumentMappingId" 
-             (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)">
+             (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
 
              <ng-template pTemplate="caption">
                 <div class="form-group row">

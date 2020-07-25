@@ -10,7 +10,8 @@
      </div>
         <p-table #dt [columns]="cols" [value]="projectList" selectionMode="single" 
                 [(selection)]="selectedProject" dataKey="projectId" 
-                (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)">
+                (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
                 <ng-template pTemplate="caption">
                     <div class="form-group row">
                         <div class="col-md-1">

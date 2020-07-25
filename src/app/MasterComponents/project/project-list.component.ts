@@ -17,17 +17,12 @@ collectionSize=0;
 showToast:boolean=false;
 selectedProject:IProjectDetail;
 cols:any[];
-  private _projectList: IProjectDetail[];
+
+
+private _projectList: IProjectDetail[];
   public get projectList(): IProjectDetail[] {
-    //return this._projectList;
-    if(this._projectList){
-      return this._projectList
-      .map((project,i)=>({id:i+1, ...project}))
-      .slice((this.page-1)*this.pageSize, (this.pageSize-1)*this.pageSize+this.pageSize);
-    }
-    else{
-      return this._projectList;
-    }
+    return this._projectList;
+    
   }
   public set projectList(value: IProjectDetail[]) {
     this._projectList = value;
