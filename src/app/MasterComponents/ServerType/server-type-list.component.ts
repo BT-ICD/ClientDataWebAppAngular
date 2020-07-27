@@ -15,14 +15,11 @@ export class ServerTypeListComponent implements OnInit {
   page = 0;
   pageSize = 10;
   collectionSize = 0;
+  selectedServerType:IServerTypeDTODetail;
+  cols:any[];
 
   public get serverTypeList(): IServerTypeDTODetail[] {
-    if (this._serverTypeList)
-      return this._serverTypeList
-        .map((servertype, i) => ({ id: i + 1, ...servertype }))
-        .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-    else
-      this._serverTypeList;
+   return   this._serverTypeList;
   }
   public set serverTypeList(value: IServerTypeDTODetail[]) {
     this._serverTypeList = value;
@@ -37,6 +34,10 @@ export class ServerTypeListComponent implements OnInit {
   
   }
   private loadData() {
+    this.cols=[
+      {field:'serverTypeId',header:'Id'},
+      {field:'name',header:'Name'}
+    ];
     this.route.data.subscribe((data) => {
       const resolvedData = data['resolvedData'];
       this.errorMessage = resolvedData.error;
@@ -48,15 +49,11 @@ export class ServerTypeListComponent implements OnInit {
     this.collectionSize = data?.length;
     this.serverTypeList = data;
   }
-  pageChanged(event) {
-    console.log('Page Changed: ' + event);
-    this.page = +event;
-    //To remove selection of particular row it position while user change page
-    this.selectedRow = -1;
+  onRowSelect(event){
+
   }
-  setClickedRow(data, index) {
-    this.selectedRow = index;
-    // console.log(JSON.stringify(data), index);
+  onRowUnSelect(event){
+
   }
   deleteButtonClick(id:number){
     //console.log('delete button clicked for: ' + id);

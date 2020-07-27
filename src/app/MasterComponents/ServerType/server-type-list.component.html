@@ -8,30 +8,46 @@
               <button type="button" class="btn btn-primary" [routerLink]="['/servertype/add']" >Add New</button>
           </div>
       </div>
-      <table class="table table-sm ">
-          <thead>
-          <tr>
-           
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let serverType of serverTypeList; let i=index" (click)="setClickedRow(serverType, i)" [class.table-active]="i == selectedRow">
-            <td scope="row"  >{{ serverType.serverTypeId}}</td>
-            <td>{{ serverType.name }}</td>
-            <td><input type="button" name="editButton" class="btn btn-outline-secondary btn-sm" [routerLink]="['/servertype',serverType.serverTypeId,'edit']" value="Edit"></td>
-            <td><input type="button" name="deleteButton"  class="btn btn-outline-secondary btn-sm" (click)="deleteButtonClick(serverType.serverTypeId)" value="Delete"></td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="d-flex justify-content-between p-2">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged($event)" >
-          </ngb-pagination>
-         
-  </div>
+      <p-table #dt [columns]="cols" [value]="serverTypeList" selectionMode="single" 
+        [(selection)]="selectedServerType" dataKey="serverTypeId" 
+        (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+
+        <ng-template pTemplate="caption">
+           <div class="form-group row">
+               <div class="col-md-1">
+                   <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" >
+                   </button>
+               </div>
+               <div class="col-md-11 d-flex justify-content-end">
+                   <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                           <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+               </div>
+           </div>
+       </ng-template>
+       <ng-template pTemplate="header" let-columns>
+           <tr>
+               <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                   {{col.header}}
+                   <p-sortIcon [field]="col.field"></p-sortIcon>
+               </th>
+               <th>
+                   Action
+               </th>
+           </tr>
+       </ng-template>
+       <ng-template pTemplate="body" let-serverType let-columns="columns">
+           <tr [pSelectableRow]="server">
+               <td *ngFor="let col of columns">
+                       {{serverType[col.field]}}
+               </td>
+              <td>
+               <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/servertype',serverType.serverTypeId,'edit']"  value="Edit">
+               <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm ml-1" (click)="deleteButtonClick(serverType.serverTypeId)" value="Delete">
+               </td>
+           </tr>
+       </ng-template>
+   </p-table>
   
 </div>
 <div class="alert alert-danger"

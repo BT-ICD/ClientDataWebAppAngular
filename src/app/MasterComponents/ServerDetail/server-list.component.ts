@@ -15,19 +15,13 @@ export class ServerListComponent implements OnInit {
   pageSize=10;
   collectionSize=0;
   showToast:boolean=false;
+  selectedServer:IServerDetail;
+  cols:any[];
   private _serverList: IServerDetail[];
 
   public get serverList(): IServerDetail[] {
-    //return this._serverList;
-    if(this._serverList){
-      return this._serverList
-      .map((server, i) => ({ id: i + 1, ...server}))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-    }
-  else
-  {
-    this._serverList;
-  }
+    return this._serverList;
+    
   }
   public set serverList(value: IServerDetail[]) {
     this._serverList = value;
@@ -37,6 +31,13 @@ export class ServerListComponent implements OnInit {
   constructor(private route:ActivatedRoute, private router:Router, private serverDataService: ServerDataService) { }
 
   ngOnInit(): void {
+    this.cols=[
+      {field:'serverId',header:'Id'},
+      {field:'name',header:'Name'},
+      {field:'serverTypeName',header:'Type'},
+      {field:'urlToAccess',header:'URL'},
+      {field:'notes',header:'notes'},
+    ];
     this.loadData();
   }
   loadData(){
@@ -50,13 +51,11 @@ export class ServerListComponent implements OnInit {
     this.collectionSize= data?.length;
     this.serverList= data;
   }
-  pageChanged(event){
-    this.page=+event;
-    this.selectedRow=-1;
+  onRowSelect(event){
+
   }
-  setClickedRow(data,index){
-    this.selectedRow=index;
-   
+  onRowUnSelect(event){
+
   }
   deleteButtonClick(id:number){
     
