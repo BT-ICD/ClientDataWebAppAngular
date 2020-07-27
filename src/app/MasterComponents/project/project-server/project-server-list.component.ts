@@ -18,13 +18,10 @@ collectionSize=0;
 showToast:boolean=false;
 selectedProjectName:string='';
 selectedProjectId:number;
+selectedProjectServer:IProjectServerType;
+cols:any[];
   private _projectServerList: IProjectServerType[];
   public get projectServerList(): IProjectServerType[] {
-    if(this._projectServerList){
-      return this._projectServerList
-      .map((projectServer,i)=>({id:i+1,...projectServer}))
-      .slice((this.page-1)*this.pageSize, (this.page-1)*this.pageSize+this.pageSize);
-    }
     return this._projectServerList;
   }
   public set projectServerList(value: IProjectServerType[]) {
@@ -34,6 +31,15 @@ selectedProjectId:number;
   constructor(private route:ActivatedRoute, private router:Router, private projectServerDataService:ProjectServerDataService, private dataConstantsService:DataConstantsService) { }
 
   ngOnInit(): void {
+    this.cols=[
+      {field:'projectServerMappingId',header:'Id'},
+      {field:'serverName',header:'Name'},
+      {field:'deployedAsServerType',header:'Deployed Server Type'},
+      {field:'urlToAccess',header:'URL'},
+      {field:'databaseServerName',header:'Database Server'},
+      {field:'dbName',header:'Database Name'},
+
+    ];
     this.loadData();
   }
   loadData(){
@@ -49,13 +55,7 @@ selectedProjectId:number;
     this._projectServerList=data;
     this.collectionSize=data.length;
   }
-  pageChanged(event){
-    this.page=+event;
-    this.selectedRow=-1;
-  }
-  setClickedRow(data, index){
-    this.selectedRow=index;
-  }
+  
   deleteButtonClick(id:number){
     if(confirm('You are about to delete a record. Are you sure?'))
       this.projectServerDataService.delete(id).subscribe(data=>this.onRecordDeleted(data));
@@ -71,5 +71,10 @@ selectedProjectId:number;
   closeToast(){
     this.showToast=false;
   }
+  onRowSelect(event){
 
+  }
+  onRowUnSelect(event){
+
+  }
 }
