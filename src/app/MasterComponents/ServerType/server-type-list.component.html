@@ -37,7 +37,7 @@
            </tr>
        </ng-template>
        <ng-template pTemplate="body" let-serverType let-columns="columns">
-           <tr [pSelectableRow]="server">
+           <tr [pSelectableRow]="serverType">
                <td *ngFor="let col of columns">
                        {{serverType[col.field]}}
                </td>
