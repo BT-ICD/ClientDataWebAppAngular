@@ -23,6 +23,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { AboutComponent } from './about.component';
 import { TokenInterceptorService } from './token-interceptor.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

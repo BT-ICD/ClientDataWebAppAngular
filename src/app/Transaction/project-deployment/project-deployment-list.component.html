@@ -1,0 +1,70 @@
+<!-- Date Format Learning Reference: https://stackoverflow.com/questions/15572644/date-format-as-mm-dd-yyy-in-pdatatable-with-dynamic-column/38252535 -->
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-server"></i>Project Deployment/Migration<br>
+        </div>
+        <div class="card-body" *ngIf="projectDeploymentList">
+            <div class="card-title">
+                Deployment details related to project: {{selectedProjectId}} - {{selectedProjectName}}
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <button type="button" class="btn btn-primary" [routerLink]="['/projectdeployment',selectedProjectId,'add']" [queryParams]="{projectName:selectedProjectName}"  >Add New</button>
+                    <button type="button" class="btn btn-outline-primary ml-2" [routerLink]="['/projectlist']">Projects</button>
+                </div>
+            </div>
+            <div class="row">
+                <p-table #dt [columns]="cols" [value]="projectDeploymentList" selectionMode="single" 
+                [(selection)]="selectedProjectDeployment" dataKey="projectDeploymentId" 
+                (onRowSelect)="onRowSelect($event)" (onRowUnSelect)="onRowUnSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+   
+                <ng-template pTemplate="caption">
+                   <div class="form-group row">
+                       <div class="col-md-1">
+                           <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" >
+                           </button>
+                       </div>
+                       <div class="col-md-11 d-flex justify-content-end">
+                           <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                   <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                       </div>
+                   </div>
+               </ng-template>
+               <ng-template pTemplate="header" let-columns>
+                   <tr>
+                       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                           {{col.header}}
+                           <p-sortIcon [field]="col.field"></p-sortIcon>
+                       </th>
+                       <th>
+                           Action
+                       </th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-projectDeployment let-columns="columns">
+                   <tr [pSelectableRow]="projectDeployment">
+                       <td *ngFor="let col of columns">
+                               <!-- {{projectDeployment[col.field]}} -->
+                            {{col.field=='deploymentDate'?(projectDeployment[col.field]|date:'dd-MMM-yyyy'):projectDeployment[col.field] }}
+                       </td>
+                      <td>
+                       <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectdeployment',projectDeployment.projectDeploymentId,'edit']" [queryParams]="{projectId:selectedProjectId , projectName:selectedProjectName}" value="Edit">
+                       <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm ml-1" (click)="deleteButtonClick(projectDeployment.projectDeploymentId)" value="Delete">
+                       <a class="ml-2" [href]="getDownloadUrl(projectDeployment.projectDeploymentId)"><i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a>
+                       </td>
+                   </tr>
+               </ng-template>
+           </p-table>            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+        {{errorMessage}}
+    </div>
+    <!-- To display toast message when user delete particular record -->
+    <ngb-toast class="bg-warning fixed-bottom" *ngIf="showToast" (hide)="closeToast()"   [autohide]="true" >
+      Record Deleted.
+    </ngb-toast>
+</div>

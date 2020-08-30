@@ -42,10 +42,10 @@
                         </td>
                         <td>
                             <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/project', project.projectId,'edit']" value="Edit" />
-                            <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/project', project.projectId,'edit']" value="Edit" />
                             <input type="button" name="deleteButton" class="btn btn-outline-secondary btn-sm ml-1" (click)="deleteButtonClick(project.projectId)" value="Delete" /> 
-                            <input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Documents"/>
-                            <input type="button" name="serverButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectserverlist',project.projectId]"  [queryParams]="{projectName:project.name}" value="Servers"/>
+                            <input type="button" name="documentsButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectdocumentlist',project.projectId]" [queryParams]="{projectName:project.name}" value="Doc"/>
+                            <input type="button" name="serverButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectserverlist',project.projectId]"  [queryParams]="{projectName:project.name}" value="Server"/>
+                            <input type="button" name="editButton" class="btn btn-outline-secondary btn-sm ml-1" [routerLink]="['/projectdeployment', project.projectId]" [queryParams]="{projectName:project.name}" value="Deploy" />
                         </td>
                     </tr>
                 </ng-template>

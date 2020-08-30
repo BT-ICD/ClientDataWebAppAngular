@@ -1,0 +1,161 @@
+<div class="container">
+    <div class="card-header">
+        Add new deployment details
+    </div>
+    <div class="card-body">
+        <div class="card-title">
+            Deployment related to project: {{selectedProjectName}}
+        </div>
+        <form (ngSubmit)="save()" [formGroup]="projectDeploymentForm">
+            <fieldset>
+                <!-- Project ID -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="projectId" >Project Id</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="projectId"
+                            name="projectId"
+                            type="text"
+                            formControlName="projectId"
+                            readonly
+                        />
+                    </div>
+                </div>
+                <!-- Deployment date -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="deploymentDate" >Deployed on</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="deploymentDate"
+                            name="deploymentDate"
+                            type="date"
+                            formControlName="deploymentDate"
+                            required
+                            [ngClass]="{'is-invalid': (projectDeploymentForm.get('deploymentDate').touched ||projectDeploymentForm.get('deploymentDate').dirty ) &&!projectDeploymentForm.get('deploymentDate').valid}"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="projectDeploymentForm.get('deploymentDate').errors?.required">
+                                Please select deployed on date, it is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- Server -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="serverId" >Server</label>
+                    <div class="col-md-8">
+                        <select class="form-control"
+                            id="serverId"
+                            name="serverId"
+                            required
+                            formControlName="serverId"
+                            [ngClass]="{'is-invalid': (projectDeploymentForm.get('serverId').touched ||projectDeploymentForm.get('serverId').dirty ) &&!projectDeploymentForm.get('serverId').valid}"
+
+                        >
+                         <option *ngFor="let server of serverList" [ngValue]="server.serverId" >
+                             {{server.name}} 
+                         </option>       
+                        </select>
+                        <span class="invalid-feedback">
+                            <span *ngIf="projectDeploymentForm.get('serverId').errors?.required">
+                                Please select deployed on server, it is required
+                            </span>
+                        </span>
+                    </div>
+                </div>                
+                <!-- Features -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="features" >Features</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="features"
+                            name="features"
+                            type="text"
+                            formControlName="features"
+                            required
+                            [ngClass]="{'is-invalid': (projectDeploymentForm.get('features').touched ||projectDeploymentForm.get('features').dirty ) &&!projectDeploymentForm.get('features').valid}"
+
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="projectDeploymentForm.get('features').errors?.required">
+                                Please update feature, it is required
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+                <!-- Version -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="version" >Version</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="version"
+                            name="version"
+                            type="text"
+                            formControlName="version"
+                            required
+                            [ngClass]="{'is-invalid': (projectDeploymentForm.get('version').touched ||projectDeploymentForm.get('version').dirty ) &&!projectDeploymentForm.get('version').valid}"
+
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="projectDeploymentForm.get('version').errors?.required">
+                                Please update version, it is required
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+                <!-- File Migration Document -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="file" >Migration Document</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="file"
+                            name="file"
+                            type="file"
+                            formControlName="file"
+                            (change)="fileProgress($event)"
+                            required
+                            [ngClass]="{'is-invalid': (projectDeploymentForm.get('file').touched ||projectDeploymentForm.get('file').dirty ) &&!projectDeploymentForm.get('file').valid}"
+
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="projectDeploymentForm.get('file').errors?.required">
+                                Please upload migration document, it is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!-- Notes -->
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes" >Notes</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control"
+                            id="notes"
+                            name="notes"
+                            cols="50"
+                            rows="3"
+                            formControlName="notes"
+                        >
+                        </textarea>
+                    </div>
+                </div>
+                <!-- Action Buttons -->
+                <div class="form-group  row">
+                    <div class="offset-md-2">
+                        <button class="btn btn-outline-primary mr-3" type="submit"  name="saveButton" title="To add new record">
+                            Save
+                        </button>
+                        <button class="btn btn-outline-primary ml-2" type="button" type="button" title="Cancel and open project list"
+                            name="listButton" [routerLink]="['/projectdeployment',selectedProjectId]"
+                            [queryParams]="{projectName:selectedProjectName}"
+                            >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    
+</div>

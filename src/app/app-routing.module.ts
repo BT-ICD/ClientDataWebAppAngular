@@ -6,6 +6,12 @@ import { AboutComponent } from './about.component';
 
 const routes: Routes = [
   {path:'about', component:AboutComponent},
+  {
+      path:'projectdeployment',
+      loadChildren:()=>
+        import('./Transaction/project-deployment/project-deployment.module')
+        .then(m=>m.ProjectDeploymentModule)
+  },
   {path:'',redirectTo:'home',pathMatch:'full'},
   {path:'**',component:PageNotFoundComponent}
 ];
