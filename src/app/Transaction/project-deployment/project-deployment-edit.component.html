@@ -67,8 +67,8 @@
                             [ngClass]="{'is-invalid': (projectDeploymentForm.get('serverId').touched ||projectDeploymentForm.get('serverId').dirty ) &&!projectDeploymentForm.get('serverId').valid}"
 
                         >
-                        <option *ngFor="let server of serverList" [ngValue]="server.serverId">
-                            {{server.name}}
+                        <option *ngFor="let server of filterServerList" [ngValue]="server.serverId">
+                            {{server.serverName}}
                         </option>
                         </select>
                         <span class="invalid-feedback">

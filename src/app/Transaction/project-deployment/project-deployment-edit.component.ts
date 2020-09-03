@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectDeploymentDataService } from './project-deployment-data.service';
 import { DataConstantsService } from 'src/app/CommonServices/data-constants.service';
+import { IServerForProjects } from 'src/app/CommonServices/commontype';
 
 @Component({
   selector: 'app-project-deployment-edit',
@@ -16,7 +17,8 @@ selectedProjectId:number;
 selectedProjectName:string;
 downloadUrl:string='';
 errorMessage:string='';
-serverList:IServerDTOFORLOV[];
+serverList:IServerForProjects[];
+filterServerList:IServerForProjects[];
 projectDeployment:IProjectDeploymentDetail;
 fileData:File=null;
 projectDeploymentForm:FormGroup;
@@ -47,7 +49,10 @@ projectDeploymentForm:FormGroup;
   }
   loadData(){
     this.route.data.subscribe((data)=>{
+      
       const resolvedData = data['resolvedData'];
+      this.selectedProjectId = resolvedData.selectedProjectId;
+      this.selectedProjectName= resolvedData.selectedProjectName;
       const resolveDataServerList = data['resolveDataServerList'];
       if(resolvedData.error!=null)
       this.errorMessage=resolvedData.error;
@@ -55,15 +60,15 @@ projectDeploymentForm:FormGroup;
       if(resolveDataServerList.error!=null)
       this.errorMessage += resolveDataServerList.error; 
       
-      this.onServerListRetrieved(resolveDataServerList.serverListForLOV);
+      this.onServerListRetrieved(resolveDataServerList.serverList);
       this.onProjectDeploymentRetrieved(resolvedData.projectDeployment);
-      this.selectedProjectId = resolvedData.selectedProjectId;
-      this.selectedProjectName= resolvedData.selectedProjectName;
+    
 
     });
   }
-  onServerListRetrieved(data:IServerDTOFORLOV[]){
+  onServerListRetrieved(data:IServerForProjects[]){
     this.serverList=data;
+    this.filterServerList = this.serverList.filter((m:IServerForProjects)=>m.projectId===this.selectedProjectId);
   }
   onProjectDeploymentRetrieved(data:IProjectDeploymentDetail){
     this.projectDeployment= data;

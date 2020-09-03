@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { ProjectDeploymentListResolvedService } from './project-deployment-list-resolved.service';
 import { ProjectDeploymentAddComponent } from './project-deployment-add.component';
 import { ProjectDeploymentEditComponent } from './project-deployment-edit.component';
-import { ServerListForLOVResolvedService } from 'src/app/MasterComponents/ServerDetail/server-list-for-lovresolved.service';
+// import { ServerListForLOVResolvedService } from 'src/app/MasterComponents/ServerDetail/server-list-for-lovresolved.service';
 import { ProjectDeploymentResolvedService } from './project-deployment-resolved.service';
+import { ServerForProjectResolvedService } from 'src/app/CommonServices/server-for-project-resolved.service';
 
 
 
@@ -22,13 +23,13 @@ import { ProjectDeploymentResolvedService } from './project-deployment-resolved.
             path:':id/add',
             component:ProjectDeploymentAddComponent,
             runGuardsAndResolvers:'always',
-            resolve:{resolveDataServerList:ServerListForLOVResolvedService}
+            resolve:{resolveDataServerList:ServerForProjectResolvedService}
           },
           {
             path:':id/edit',
             component:ProjectDeploymentEditComponent,
             runGuardsAndResolvers:'always',
-            resolve:{resolvedData: ProjectDeploymentResolvedService ,  resolveDataServerList:ServerListForLOVResolvedService}
+            resolve:{resolvedData: ProjectDeploymentResolvedService ,  resolveDataServerList:ServerForProjectResolvedService}
           },
           {
             path:':id',

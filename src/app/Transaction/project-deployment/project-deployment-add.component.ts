@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ProjectDeploymentDataService } from './project-deployment-data.service';
-import { IServerDTOFORLOV } from 'src/app/MasterComponents/ServerDetail/iserver-details';
 import { IProjectDeploymentAdd } from './project-deployment-types';
+import { IServerForProjects } from 'src/app/CommonServices/commontype';
 
 @Component({
   selector: 'app-project-deployment-add',
@@ -16,7 +16,8 @@ export class ProjectDeploymentAddComponent implements OnInit {
   selectedProjectId:number;
   selectedProjectName:string;
   errorMessage:string='';
-  serverList:IServerDTOFORLOV[];
+  serverList:IServerForProjects[];
+  filterServerList:IServerForProjects[];
   projectDeploymentAdd:IProjectDeploymentAdd={
     projectId:0,
     deploymentDate:null,
@@ -35,12 +36,10 @@ export class ProjectDeploymentAddComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private route:ActivatedRoute, private router:Router, private projectDeploymentDataService:ProjectDeploymentDataService) { }
 
   ngOnInit(): void {
-    this.loadData();
-    console.log(this.serverList);
-
     this.selectedProjectId = +this.route.snapshot.params['id'];
     this.selectedProjectName = this.route.snapshot.queryParamMap.get('projectName');
     this.projectDeploymentAdd.projectId= this.selectedProjectId;
+    this.loadData();
 
     this.projectDeploymentForm = this.formBuilder.group(
       {
@@ -58,21 +57,21 @@ loadData(){
   this.route.data.subscribe((data)=>{
     const resolveDataServerList=data['resolveDataServerList']
     this.errorMessage= resolveDataServerList.error;
-    
-    this.onServerListRetrieved(resolveDataServerList.serverListForLOV);
+    this.onServerListRetrieved(resolveDataServerList.serverList);
   });  
 }
-onServerListRetrieved(data:IServerDTOFORLOV[]){
+onServerListRetrieved(data:IServerForProjects[]){
   this.serverList=data;
+  this.filterServerList = this.serverList.filter((m:IServerForProjects)=> m.projectId==this.selectedProjectId);
 }
 fileProgress(fileInput:any){
   this.fileData = <File>fileInput.target.files[0];
 }
 save():void{
 
-  console.log('save clicked')
-  console.log('valid ' + this.projectDeploymentForm.valid);
-  console.log('Form model: ' + JSON.stringify(this.projectDeploymentForm.value));
+  // console.log('save clicked')
+  // console.log('valid ' + this.projectDeploymentForm.valid);
+  // console.log('Form model: ' + JSON.stringify(this.projectDeploymentForm.value));
   if(this.projectDeploymentForm.valid){
     const formData = new FormData();
     formData.append('projectId', this.projectDeploymentForm.get('projectId').value);
@@ -91,4 +90,5 @@ save():void{
     );
   }
 }
+
 }

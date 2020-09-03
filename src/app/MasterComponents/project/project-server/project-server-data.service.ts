@@ -3,6 +3,7 @@ import { IProjectServerType, IProjectServerMappingDTOAdd, IProjectServerMappingD
 import { HttpClient } from '@angular/common/http';
 import { DataConstantsService } from 'src/app/CommonServices/data-constants.service';
 import { Observable } from 'rxjs';
+import { IServerForProjects } from 'src/app/CommonServices/commontype';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,9 @@ projectServerList:IProjectServerType[];
   delete(id:number){
     const url:string = this.dataConstantsService.BASEAPIURL + 'ProjectServerMapping/delete/' + id;
     return this.http.post(url,null);
+  }
+  getServersForProject(id:number):Observable<IServerForProjects[]>{
+    const url:string = this.dataConstantsService.BASEAPIURL + 'ProjectServerMapping/getprojectservers/';
+    return this.http.get<IServerForProjects[]>(url);
   }
 }
