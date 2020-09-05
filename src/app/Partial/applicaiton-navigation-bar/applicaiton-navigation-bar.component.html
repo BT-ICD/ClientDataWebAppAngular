@@ -16,9 +16,9 @@
       <li>
         <a class="nav-link" [routerLink]="['/home']" (click)="isMenuCollapsed = true">Home</a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/about']" (click)="isMenuCollapsed = true">About</a>
+      <!-- Project Menu -->
+      <li>
+        <a class="nav-link" [routerLink]="['/projectlist']" (click)="isMenuCollapsed = true">Projects</a>
       </li>
      
     
@@ -28,9 +28,12 @@
         <button ngbDropdownItem [routerLink]="['/documenttypelist']" (click)="isMenuCollapsed = true">Document Type</button>
         <button ngbDropdownItem [routerLink]="['/servertype']" (click)="isMenuCollapsed = true" >Server Type</button>
         <button ngbDropdownItem [routerLink]="['/serverlist']" (click)="isMenuCollapsed = true">Server</button>
-        <button ngbDropdownItem [routerLink]="['/projectlist']" (click)="isMenuCollapsed=true">Project</button>
+        <!-- <button ngbDropdownItem [routerLink]="['/projectlist']" (click)="isMenuCollapsed=true">Project</button> -->
       </div>
     </div>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/about']" (click)="isMenuCollapsed = true">About</a>
+    </li>
     <li class="nav-item" *ngIf="!isLoggedIn">
       <a class="nav-link" [routerLink]="['/login']" (click)="isMenuCollapsed = true">Login</a>
     </li>
