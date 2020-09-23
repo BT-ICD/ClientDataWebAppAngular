@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IProjectDetail } from './iproject-detail';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectDataService } from './project-data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, OnDestroy {
 selectedRow:number;
 errorMessage:string='';
 page=0;
@@ -17,7 +18,7 @@ collectionSize=0;
 showToast:boolean=false;
 selectedProject:IProjectDetail;
 cols:any[];
-
+routeDataSub:Subscription;
 
 private _projectList: IProjectDetail[];
   public get projectList(): IProjectDetail[] {
@@ -28,6 +29,7 @@ private _projectList: IProjectDetail[];
     this._projectList = value;
   }
   constructor(private route:ActivatedRoute, private router:Router, private projectDataService:ProjectDataService) { }
+ 
 
   ngOnInit(): void {
     this.cols=[
@@ -38,7 +40,7 @@ private _projectList: IProjectDetail[];
     this.loadData();
   }
   loadData(){
-    this.route.data.subscribe(
+    this.routeDataSub= this.route.data.subscribe(
       (data)=>{
        
         const resolvedData = data['resolvedData'];
@@ -79,5 +81,11 @@ private _projectList: IProjectDetail[];
   closeToast(){
     this.showToast=false;
   }
-
+  //To unsubscribe we can use SubSink npm third party package - 
+  //https://www.npmjs.com/package/subsink
+  ngOnDestroy(): void {
+    console.log('Project list component about to destroy .... ');
+    if(this.routeDataSub)
+      this.routeDataSub.unsubscribe();
+  }
 }
