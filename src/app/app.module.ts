@@ -1,5 +1,6 @@
 // Angular Library Modules 
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { ProjectServerModule } from './MasterComponents/Project/project-server/p
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AboutComponent } from './about.component';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { TeamMemberModule } from './MasterComponents/team-member/team-member.module';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { TokenInterceptorService } from './token-interceptor.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     HomeModule,
@@ -45,7 +48,9 @@ import { TokenInterceptorService } from './token-interceptor.service';
     ProjectDocumentsModule,
     DocumentTypeModule,
     ProjectServerModule,
+    TeamMemberModule,
     AppRoutingModule
+    
   ],
   providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService, multi:true}],
   bootstrap: [AppComponent]

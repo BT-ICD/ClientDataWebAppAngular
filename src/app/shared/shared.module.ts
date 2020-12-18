@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button'; //Added to get CSV button ICON with same format from NGPrime
+import {CalendarModule} from 'primeng/calendar'
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {ButtonModule} from 'primeng/button'; //Added to get CSV button ICON with
     ReactiveFormsModule,
     ButtonModule,
     NgbModule,
-    TableModule
+    TableModule,
+    CalendarModule
   ]
 })
 export class SharedModule { }

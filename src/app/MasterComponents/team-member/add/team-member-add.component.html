@@ -1,0 +1,128 @@
+<div class="container">
+    <form [formGroup]="teamMemberForm" (ngSubmit)="onSubmit()">
+        <div class="card">
+            <div class="card-header">
+                Team Member Details
+            </div>
+            <div class="card-body">
+                 <!-- Team Member Name -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="name">Name</label>
+                    <div class="col-md-8" >
+                        <input type="text" 
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            formControlName="name"
+                            [ngClass]="{
+                                    'is-invalid':((teamMemberForm.get('name').touched||teamMemberForm.get('name').dirty) && !teamMemberForm.get('name').valid)
+                                }"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="teamMemberForm.get('name').errors?.required">
+                                    Name is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                 <!-- Team Member email -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="email">Email</label>
+                    <div class="col-md-8" >
+                        <input type="email" 
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            formControlName="email"
+                            [ngClass]="{'is-invalid':((teamMemberForm.get('email').touched||teamMemberForm.get('dirty'))&& 
+                                            !teamMemberForm.get('email').valid)
+
+                                }"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="teamMemberForm.get('email').errors?.required">
+                                   Email is required 
+                            </span>
+                        </span>
+                    </div>
+                </div>                
+                 <!-- Team Member mobile -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="mobile">Mobile</label>
+                    <div class="col-md-8" >
+                        <input type="text" 
+                            class="form-control"
+                            id="mobile"
+                            name="mobile"
+                            formControlName="mobile"
+                            [ngClass]="{'is-invalid':((teamMemberForm.get('mobile').touched||teamMemberForm.get('mobile').dirty)
+                                            &&!teamMemberForm.get('mobile').valid)
+                                        }"
+                        />
+                        <span class="invalid-feedback">
+                            <span *ngIf="teamMemberForm.get('mobile').errors?.required">
+                                Mobile is required
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                 <!-- Team Member alternate contact -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="alternateContact">Alternate Cotact</label>
+                    <div class="col-md-8" >
+                        <input type="text" 
+                            class="form-control"
+                            id="alternateContact"
+                            name="alternateContact"
+                            formControlName="alternateContact"
+                        />
+                    </div>
+                </div>
+                 <!-- Team Member DOJ -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="doj">Date of joining</label>
+                    <div class="col-md-8" >
+                        <p-calendar name="doj" formControlName="doj" dateFormat="dd-M-yy" [yearNavigator]="true" 
+                            yearRange="1960:2020"
+                            [ngClass]="{'is-invalid':((teamMemberForm.get('doj').touched||teamMemberForm.get('doj').dirty)&& 
+                                    !teamMemberForm.get('doj').valid)
+                                    }"
+                        >
+                        </p-calendar>
+                        <span class="invalid-feedback">
+                            <span *ngIf="teamMemberForm.get('doj').errors?.required">
+                                Date of joining is required
+                            </span>
+                        </span>
+                    </div>
+                </div>                
+                 <!-- Team Member notes -->
+                 <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="notes">Notes</label>
+                    <div class="col-md-8" >
+                        <textarea 
+                            class="form-control"
+                            id="notes"
+                            name="notes"
+                            rows="5"
+                            cols="30"
+                            formControlName="notes"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="form-group row">
+                    <div class="col-md-4 offset-md-2">
+                            <button class="btn btn-outline-primary" type="submit" title="To add new record" >Save</button>
+                            <button class="btn btn-outline-primary ml-1" type="button" [routerLink]="['/team']" title="Cancel and open team member list">Cancel</button>
+                    </div>
+                </div>              
+            </div>
+        </div>
+
+    </form>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+    </div>
+</div>
